@@ -26,6 +26,7 @@ public class BookStoreService {
     public List<Book> getBooks() {
         return books;
     }
+
     public List<Order> getOrders() {
         return orders;
     }
@@ -33,22 +34,17 @@ public class BookStoreService {
     public List<Order> listOrders(int page, int size, String sortBy) {
         Comparator<Order> comparator;
         switch (sortBy.toLowerCase()) {
-            case "id":
-                comparator = Comparator.comparing(Order::getId);
-                break;
-            case "totalprice":
-                comparator = Comparator.comparing(Order::getTotalPrice);
-                break;
-            case "opening":
-                comparator = Comparator.comparing(Order::getOpeningTime);
-                break;
-            case "status":
-                comparator = Comparator.comparing(Order::getStatus);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid sort field: " + sortBy);
+            case "id" -> comparator = Comparator.comparing(Order::getId);
+            case "totalprice" -> comparator = Comparator.comparing(Order::getTotalPrice);
+            case "opening" -> comparator = Comparator.comparing(Order::getOpeningTime);
+            case "status" -> comparator = Comparator.comparing(Order::getStatus);
+            default -> throw new IllegalArgumentException("Invalid sort field: " + sortBy);
         }
-        return orders.stream().sorted(comparator).skip((long) (page - 1) * size).limit(size).collect(Collectors.toList());
+        return orders.stream()
+                .sorted(comparator)
+                .skip((long) (page - 1) * size)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     public Order open(List<Book> books, double totalPrice) {
@@ -111,6 +107,4 @@ public class BookStoreService {
             return null;
         }
     }
-
-
 }

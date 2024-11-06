@@ -14,17 +14,19 @@ public class OrderService {
     public OrderService(BookStoreService bookStoreService) {
         this.bookStoreService = bookStoreService;
     }
-    public void displayBooks(){
+
+    public void displayBooks() {
         System.out.println("Available books: ");
         List<Book> allBooks = bookStoreService.getBooks();
         for (Book book : allBooks) {
             System.out.println(book);
         }
     }
+
     public void openBookOrder(BookStoreService bookStoreService,
-                                     Scanner scanner) {
-        List<Book> chosenBooks=new ArrayList<>();
-        double totalPrice=0;
+                              Scanner scanner) {
+        List<Book> chosenBooks = new ArrayList<>();
+        double totalPrice = 0;
         System.out.println("Enter the book Id you wanna order" +
                 " one by one, or type 'done' when finished:");
         while (true) {
@@ -49,7 +51,8 @@ public class OrderService {
         chosenBooks.clear();
         totalPrice = 0;
     }
-     public void displayOrderDetails(Order orderedBook, List<Book> chosenBooks, double totalPrice) {
+
+    public void displayOrderDetails(Order orderedBook, List<Book> chosenBooks, double totalPrice) {
         System.out.println("Order Details: Order " + orderedBook.getId());
         System.out.printf("%-5s %-30s %-10s%n", "ID", "Title", "Price");
         System.out.println("--------------------------------------------");
@@ -58,8 +61,9 @@ public class OrderService {
         }
         System.out.printf("Total Price: $%.2f%n", totalPrice);
     }
-    public  void completeOrder(BookStoreService bookStoreService,
-                                     Scanner scanner) {
+
+    public void completeOrder(BookStoreService bookStoreService,
+                              Scanner scanner) {
         System.out.println("Enter the order IDs you want" +
                 " to complete, one by one, or type 'done' when finished:");
         while (true) {
@@ -78,7 +82,7 @@ public class OrderService {
         }
     }
 
-    public  void cancelOrder(BookStoreService bookStoreService, Scanner scanner) {
+    public void cancelOrder(BookStoreService bookStoreService, Scanner scanner) {
         System.out.println("Enter the order ID you want to cancel:");
         while (true) {
             String input = scanner.nextLine();
@@ -94,6 +98,7 @@ public class OrderService {
             }
         }
     }
+
     public void listOrders(BookStoreService bookStoreService, Scanner scanner) {
         System.out.println("Enter page number:");
         int page = Integer.parseInt(scanner.nextLine());
