@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
-    private int ID;
+    private int id;
     private List<Book> books;
     private double totalPrice;
     private OrderStatus status;
@@ -14,8 +14,8 @@ public class Order {
     private LocalDateTime closingTime;
 
 
-    public Order(int ID, List<Book> books, double totalPrice) {
-        this.ID = ID;
+    public Order(int id, List<Book> books, double totalPrice) {
+        this.id = id;
         this.books = books;
         this.totalPrice=totalPrice;
         this.status=OrderStatus.OPENED;
@@ -23,8 +23,8 @@ public class Order {
     }
 
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
     public List<Book> getBooks() {
@@ -61,7 +61,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", books=" + books +
                 ", totalPrice=" + totalPrice +
                 ", status=" + status +

@@ -1,22 +1,22 @@
 package org.example.BookStore.model;
 
 public class Book {
-    private int ID;
+    private int id;
     private String name;
     private double price;
 
-    public Book(int ID, String name, double price) {
-        this.ID = ID;
+    public Book(int id, String name, double price) {
+        this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -38,7 +38,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 '}';
