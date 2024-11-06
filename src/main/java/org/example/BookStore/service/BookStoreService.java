@@ -17,7 +17,6 @@ public class BookStoreService {
     int orderId = 1;
 
     public BookStoreService() {
-
         books.add(new Book(1, "crime and punishemnt", 20));
         books.add(new Book(2, "The Great", 15));
         books.add(new Book(3, "Anna Karenina", 25));
@@ -27,9 +26,7 @@ public class BookStoreService {
     public List<Book> getBooks() {
         return books;
     }
-
     public List<Order> getOrders() {
-
         return orders;
     }
 
@@ -51,11 +48,7 @@ public class BookStoreService {
             default:
                 throw new IllegalArgumentException("Invalid sort field: " + sortBy);
         }
-        return orders.stream()
-                .sorted(comparator)
-                .skip((long) (page - 1) * size)
-                .limit(size)
-                .collect(Collectors.toList());
+        return orders.stream().sorted(comparator).skip((long) (page - 1) * size).limit(size).collect(Collectors.toList());
     }
 
     public Order open(List<Book> books, double totalPrice) {
@@ -78,7 +71,7 @@ public class BookStoreService {
         throw new BookNotFoundException("Book with id " + bookId + " not found.");
     }
 
-    public Order findOrderById(int orderid) throws OrderNotFoundException {
+    public Order findOrderById(int orderId) throws OrderNotFoundException {
         for (Order order : orders) {
             if (order.getId() == orderId) {
                 return order;
