@@ -69,7 +69,6 @@ public class BookStoreServiceTest {
         List<Book> books = List.of(new Book(1, "crime and punishemnt", 20));
         Order order = bookStoreService.open(books, 20);
         assertNotNull(order);
-
         Order completedOrder = bookStoreService.complete(order.getId());
         assertEquals(OrderStatus.COMPLETED, completedOrder.getStatus());
     }
@@ -79,7 +78,6 @@ public class BookStoreServiceTest {
         List<Book> books = List.of(new Book(1, "crime and punishemnt", 20));
         Order order = bookStoreService.open(books, 20);
         assertNotNull(order);
-
         Order canceledOrder = bookStoreService.cancel(order.getId());
         assertEquals(OrderStatus.CANCELED, canceledOrder.getStatus());
     }
