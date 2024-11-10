@@ -47,7 +47,13 @@ public class OrderService {
             }
         }
         Order orderedBook = bookStoreService.open(chosenBooks, totalPrice);
-        displayOrderDetails(orderedBook, chosenBooks, totalPrice);
+        if (orderedBook == null) {
+            System.out.println("orderedBook is null. Cannot display details.");
+            return;
+        }
+        else{
+        displayOrderDetails(orderedBook, chosenBooks, totalPrice);}
+
         chosenBooks.clear();
         totalPrice = 0;
     }
