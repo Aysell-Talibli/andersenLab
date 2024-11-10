@@ -16,13 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookStoreServiceTest {
     private BookStoreService bookStoreService;
+
     @BeforeEach
     void setUp() {
         bookStoreService = new BookStoreService();
     }
 
     @Test
-    public void testOpenOrderWithBooks() {
+    public void openOrderWithBooks() {
         List<Book> books = List.of(new Book(1, "crime and punishment", 20));
         Order order = bookStoreService.open(books, 20);
         assertNotNull(order, "Order should not be null");
@@ -31,20 +32,20 @@ public class BookStoreServiceTest {
     }
 
     @Test
-    public void testOpenOrderWithEmptyBooks() {
+    public void openOrderWithEmptyBooks() {
         Order order = bookStoreService.open(Collections.emptyList(), 0);
         assertNull(order, "Order should be null when no books are provided");
     }
 
     @Test
-    void testFindBookById() throws BookNotFoundException {
+    void findBookById() throws BookNotFoundException {
         Book book = bookStoreService.findBookById(1);
         assertNotNull(book);
         assertEquals("crime and punishment", book.getName());
     }
 
     @Test
-    void testFindOrderById() throws OrderNotFoundException {
+    void findOrderById() throws OrderNotFoundException {
         List<Book> books = List.of(new Book(1, "crime and punishment", 20));
         Order order = bookStoreService.open(books, 20);
         Order foundOrder = bookStoreService.findOrderById(order.getId());
@@ -54,7 +55,7 @@ public class BookStoreServiceTest {
     }
 
     @Test
-    public void testOpenOrderCreatesNewOrderId() {
+    public void openOrderCreatesNewOrderId() {
         List<Book> books1 = List.of(new Book(1, "crime and punishment", 20));
         List<Book> books2 = List.of(new Book(2, "the great", 10));
         Order order1 = bookStoreService.open(books1, 20);
@@ -65,7 +66,7 @@ public class BookStoreServiceTest {
     }
 
     @Test
-    void testCompleteOrder() {
+    void completeOrder() {
         List<Book> books = List.of(new Book(1, "crime and punishemnt", 20));
         Order order = bookStoreService.open(books, 20);
         assertNotNull(order);
@@ -74,7 +75,7 @@ public class BookStoreServiceTest {
     }
 
     @Test
-    void testCancelOrder() {
+    void cancelOrder() {
         List<Book> books = List.of(new Book(1, "crime and punishemnt", 20));
         Order order = bookStoreService.open(books, 20);
         assertNotNull(order);

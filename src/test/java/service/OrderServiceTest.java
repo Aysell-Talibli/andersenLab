@@ -32,7 +32,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    void testOpenBookOrder() throws BookNotFoundException {
+    void openBookOrder() throws BookNotFoundException {
         Scanner scanner = mock(Scanner.class);
         when(scanner.nextLine())
                 .thenReturn("1")
@@ -43,24 +43,24 @@ public class OrderServiceTest {
         orderService.openBookOrder(bookStoreService, scanner);
         verify(bookStoreService, times(1)).findBookById(1);
         verify(bookStoreService, times(1)).open(anyList(), anyDouble());
-}
+    }
 
     @Test
-    void testCompleteOrder() {
+    void completeOrder() {
         Scanner scanner = new Scanner("1\ndone\n");
         orderService.completeOrder(bookStoreService, scanner);
         verify(bookStoreService, times(1)).complete(1);
     }
 
     @Test
-    void testCancelOrder() {
+    void cancelOrder() {
         Scanner scanner = new Scanner("1\ndone\n");
         orderService.cancelOrder(bookStoreService, scanner);
         verify(bookStoreService, times(1)).cancel(1);
     }
 
     @Test
-    void testListOrders() {
+    void listOrders() {
         List<Order> mockOrders = Arrays.asList(
                 new Order(1, List.of(new Book(1, "crime and punishment", 20)), 20),
                 new Order(2, List.of(new Book(2, "The Great", 10)), 30)
