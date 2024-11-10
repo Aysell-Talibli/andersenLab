@@ -3,7 +3,6 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-.idea/misc.xml
 
 
 ### IntelliJ IDEA ###
@@ -42,3 +41,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+.idea/misc.xml
