@@ -8,6 +8,7 @@ import org.example.BookStore.exceptions.OrderNotFoundException;
 import org.example.BookStore.model.Book;
 import org.example.BookStore.model.Order;
 import org.example.BookStore.model.OrderStatus;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -66,16 +67,16 @@ public class BookStoreService {
 
     public Book findBookById(int bookId) throws BookNotFoundException {
         return books.stream()
-                    .filter(book -> book.getId()==bookId)
-                    .findFirst()
-                    .orElseThrow(() -> new BookNotFoundException("Book with id "+bookId+" not found"));
+                .filter(book -> book.getId() == bookId)
+                .findFirst()
+                .orElseThrow(() -> new BookNotFoundException("Book with id " + bookId + " not found"));
     }
 
     public Order findOrderById(int orderId) throws OrderNotFoundException {
         return orders.stream()
-                .filter(order -> order.getId()==orderId)
+                .filter(order -> order.getId() == orderId)
                 .findFirst()
-                .orElseThrow(() -> new OrderNotFoundException("Order with id "+orderId+" not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
     }
 
     public Order complete(int orderId) {
@@ -112,9 +113,9 @@ public class BookStoreService {
 
     public void changeAvailability(int bookId, boolean isAvailable) throws BookNotFoundException {
         Book book = findBookById(bookId);
-        if(book!=null){
+        if (book != null) {
             book.setAvailable(isAvailable);
-            System.out.println("Book availability updated to "+isAvailable);
+            System.out.println("Book availability updated to " + isAvailable);
         }
     }
 }

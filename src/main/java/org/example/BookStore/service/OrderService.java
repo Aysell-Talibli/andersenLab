@@ -22,13 +22,13 @@ public class OrderService {
 
     public OrderService(BookStoreService bookStoreService, ConfigLoader configLoader) {
         this.bookStoreService = bookStoreService;
-        this.configLoader=configLoader;
+        this.configLoader = configLoader;
         loadState();
     }
 
     public void displayBooks() throws BookNotFoundException {
         System.out.println("Available books: ");
-        changeBookAvailability(1,true);
+        changeBookAvailability(1, true);
         bookStoreService.getBooks().forEach(System.out::println);
     }
 
@@ -59,9 +59,9 @@ public class OrderService {
         if (orderedBook == null) {
             System.out.println("orderedBook is null. Cannot display details.");
             return;
+        } else {
+            displayOrderDetails(orderedBook, chosenBooks, totalPrice);
         }
-        else{
-        displayOrderDetails(orderedBook, chosenBooks, totalPrice);}
         orders.add(orderedBook);
         chosenBooks.clear();
         totalPrice = 0;
@@ -131,7 +131,7 @@ public class OrderService {
         });
     }
 
-    public void saveState(){
+    public void saveState() {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.findAndRegisterModules();
         String fileLocation = configLoader.getOrderFileLocation();
@@ -141,23 +141,22 @@ public class OrderService {
                 fileWriter.write(jsonOrder + System.lineSeparator());
             }
         } catch (IOException e) {
-            System.out.println("Error happened while saving "+e.getMessage());
+            System.out.println("Error happened while saving " + e.getMessage());
         }
     }
 
-    public void loadState(){
+    public void loadState() {
         objectMapper.findAndRegisterModules();
         String fileLocation = configLoader.getOrderFileLocation();
-        try{
-            File file =new File(fileLocation);
+        try {
+            File file = new File(fileLocation);
             if (file.exists()) {
                 Order[] loadedOrders = objectMapper.readValue(file, Order[].class);
                 orders = new ArrayList<>(List.of(loadedOrders));
                 System.out.println("Orders loaded from " + fileLocation);
             }
-        }
-        catch (IOException e){
-            System.out.println("Error while loading" +e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error while loading" + e.getMessage());
 
         }
     }

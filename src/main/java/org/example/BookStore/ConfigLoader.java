@@ -6,6 +6,7 @@ import java.util.Properties;
 
 public class ConfigLoader {
     private final Properties properties;
+
     public ConfigLoader(String configFilePath) {
         properties = new Properties();
         try (FileInputStream fis = new FileInputStream(configFilePath)) {

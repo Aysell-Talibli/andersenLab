@@ -16,7 +16,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ConfigLoader config = new ConfigLoader("config.properties");
         BookStoreService bookStoreService = new BookStoreService();
-        OrderService orderService=new OrderService(bookStoreService, config);
+        OrderService orderService = new OrderService(bookStoreService, config);
         orderService.displayBooks();
         while (true) {
             System.out.println(""" 
