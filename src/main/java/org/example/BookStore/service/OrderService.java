@@ -1,26 +1,35 @@
 package org.example.BookStore.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.example.BookStore.ConfigLoader;
 import org.example.BookStore.exceptions.BookNotFoundException;
 import org.example.BookStore.model.Book;
 import org.example.BookStore.model.Order;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class OrderService {
     private final BookStoreService bookStoreService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private List<Order> orders = new ArrayList<>();
+    private final ConfigLoader configLoader;
 
-    public OrderService(BookStoreService bookStoreService) {
+    public OrderService(BookStoreService bookStoreService, ConfigLoader configLoader) {
         this.bookStoreService = bookStoreService;
+        this.configLoader=configLoader;
+        loadState();
     }
 
-    public void displayBooks() {
+    public void displayBooks() throws BookNotFoundException {
         System.out.println("Available books: ");
-        List<Book> allBooks = bookStoreService.getBooks();
-        for (Book book : allBooks) {
-            System.out.println(book);
-        }
+        changeBookAvailability(1,true);
+        bookStoreService.getBooks().forEach(System.out::println);
     }
 
     public void openBookOrder(BookStoreService bookStoreService,
@@ -53,7 +62,7 @@ public class OrderService {
         }
         else{
         displayOrderDetails(orderedBook, chosenBooks, totalPrice);}
-
+        orders.add(orderedBook);
         chosenBooks.clear();
         totalPrice = 0;
     }
@@ -121,4 +130,45 @@ public class OrderService {
                     ", Closing Time: " + (order.getClosingTime() != null ? order.getClosingTime() : "Not closed yet"));
         });
     }
+
+    public void saveState(){
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.findAndRegisterModules();
+        String fileLocation = configLoader.getOrderFileLocation();
+        try (FileWriter fileWriter = new FileWriter(fileLocation, true)) {
+            for (Order order : orders) {
+                String jsonOrder = objectMapper.writeValueAsString(order);
+                fileWriter.write(jsonOrder + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.out.println("Error happened while saving "+e.getMessage());
+        }
+    }
+
+    public void loadState(){
+        objectMapper.findAndRegisterModules();
+        String fileLocation = configLoader.getOrderFileLocation();
+        try{
+            File file =new File(fileLocation);
+            if (file.exists()) {
+                Order[] loadedOrders = objectMapper.readValue(file, Order[].class);
+                orders = new ArrayList<>(List.of(loadedOrders));
+                System.out.println("Orders loaded from " + fileLocation);
+            }
+        }
+        catch (IOException e){
+            System.out.println("Error while loading" +e.getMessage());
+
+        }
+    }
+
+    public void changeBookAvailability(int bookId, boolean isAvailable) throws BookNotFoundException {
+        if (configLoader.isBookAvailabilityChangeEnabled()) {
+            bookStoreService.changeAvailability(bookId, isAvailable);
+            System.out.println("Book availability changed ");
+        } else {
+            System.out.println("Changing book availability is disabled in the configuration.");
+        }
+    }
 }
+

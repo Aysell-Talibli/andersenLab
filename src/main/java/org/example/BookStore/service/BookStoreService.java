@@ -1,22 +1,28 @@
 package org.example.BookStore.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.example.BookStore.exceptions.BookNotFoundException;
 import org.example.BookStore.exceptions.OrderNotFoundException;
 import org.example.BookStore.model.Book;
 import org.example.BookStore.model.Order;
 import org.example.BookStore.model.OrderStatus;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookStoreService {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String file_path = "orders.txt";
     private List<Book> books = new ArrayList<Book>();
     private List<Order> orders = new ArrayList<Order>();
     int orderId = 1;
 
     public BookStoreService() {
+        this.objectMapper.registerModule(new JavaTimeModule());
         books.add(new Book(1, "crime and punishemnt", 20));
         books.add(new Book(2, "The Great", 15));
         books.add(new Book(3, "Anna Karenina", 25));
@@ -59,21 +65,17 @@ public class BookStoreService {
     }
 
     public Book findBookById(int bookId) throws BookNotFoundException {
-        for (Book book : books) {
-            if (book.getId() == bookId) {
-                return book;
-            }
-        }
-        throw new BookNotFoundException("Book with id " + bookId + " not found.");
+        return books.stream()
+                    .filter(book -> book.getId()==bookId)
+                    .findFirst()
+                    .orElseThrow(() -> new BookNotFoundException("Book with id "+bookId+" not found"));
     }
 
     public Order findOrderById(int orderId) throws OrderNotFoundException {
-        for (Order order : orders) {
-            if (order.getId() == orderId) {
-                return order;
-            }
-        }
-        throw new OrderNotFoundException("Order with id " + orderId + " not found");
+        return orders.stream()
+                .filter(order -> order.getId()==orderId)
+                .findFirst()
+                .orElseThrow(() -> new OrderNotFoundException("Order with id "+orderId+" not found"));
     }
 
     public Order complete(int orderId) {
@@ -105,6 +107,14 @@ public class BookStoreService {
         } catch (OrderNotFoundException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public void changeAvailability(int bookId, boolean isAvailable) throws BookNotFoundException {
+        Book book = findBookById(bookId);
+        if(book!=null){
+            book.setAvailable(isAvailable);
+            System.out.println("Book availability updated to "+isAvailable);
         }
     }
 }

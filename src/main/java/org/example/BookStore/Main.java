@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        BookStoreService bookStoreService = new BookStoreService();
-        OrderService orderService=new OrderService(bookStoreService);
-        orderService.displayBooks();
 
+    public static void main(String[] args) throws BookNotFoundException {
+        Scanner scanner = new Scanner(System.in);
+        ConfigLoader config = new ConfigLoader("config.properties");
+        BookStoreService bookStoreService = new BookStoreService();
+        OrderService orderService=new OrderService(bookStoreService, config);
+        orderService.displayBooks();
         while (true) {
             System.out.println(""" 
                     Options:
@@ -35,6 +36,7 @@ public class Main {
                     case "list" -> orderService.listOrders(bookStoreService, scanner);
                     case "exit" -> {
                         System.out.println("Exiting program.");
+                        orderService.saveState();
                         scanner.close();
                         return;
                     }

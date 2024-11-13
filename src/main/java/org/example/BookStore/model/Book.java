@@ -4,6 +4,7 @@ public class Book {
     private int id;
     private String name;
     private double price;
+    private boolean available;
 
     public Book(int id, String name, double price) {
         this.id = id;
@@ -35,12 +36,21 @@ public class Book {
         this.price = price;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
-                "ID=" + id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+                ", available=" + available +
                 '}';
     }
 }
