@@ -20,10 +20,13 @@ public class OrderService {
     private List<Order> orders = new ArrayList<>();
     private final ConfigLoader configLoader;
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     public OrderService(BookStoreService bookStoreService, ConfigLoader configLoader) {
         this.bookStoreService = bookStoreService;
         this.configLoader = configLoader;
-        loadState();
     }
 
     public void displayBooks() throws BookNotFoundException {

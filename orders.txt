@@ -1,0 +1,18 @@
+{
+  "id" : 1,
+  "books" : [ {
+    "id" : 1,
+    "name" : "crime and punishemnt",
+    "price" : 20.0,
+    "available" : true
+  }, {
+    "id" : 2,
+    "name" : "The Great",
+    "price" : 15.0,
+    "available" : false
+  } ],
+  "totalPrice" : 35.0,
+  "status" : "OPENED",
+  "openingTime" : [ 2024, 11, 19, 0, 10, 3, 343117700 ],
+  "closingTime" : null
+}
