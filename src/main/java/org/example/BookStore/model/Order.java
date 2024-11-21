@@ -1,6 +1,6 @@
 package org.example.BookStore.model;
-
-import org.example.BookStore.model.Book;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,8 +13,12 @@ public class Order {
     private LocalDateTime openingTime;
     private LocalDateTime closingTime;
 
-
-    public Order(int id, List<Book> books, double totalPrice) {
+    @JsonCreator
+    public Order(
+            @JsonProperty("id") int id,
+            @JsonProperty("books") List<Book> books,
+            @JsonProperty("totalPrice") double totalPrice
+    )  {
         this.id = id;
         this.books = books;
         this.totalPrice=totalPrice;
@@ -54,8 +58,8 @@ public class Order {
         }
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

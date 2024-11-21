@@ -16,10 +16,13 @@ ext {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4'
+    testImplementation platform("org.junit:junit-bom:${jUnitVersion}")
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: "${mockitoVersion}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
 }
+
 
 run {
     standardInput = System.in
