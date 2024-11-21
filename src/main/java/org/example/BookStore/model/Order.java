@@ -58,8 +58,8 @@ public class Order {
         }
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

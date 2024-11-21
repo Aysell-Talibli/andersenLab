@@ -1,15 +1,24 @@
 package org.example.BookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Book {
     private int id;
     private String name;
     private double price;
     private boolean available;
 
-    public Book(int id, String name, double price) {
+
+    @JsonCreator
+    public Book(
+            @JsonProperty("id") int id,
+            @JsonProperty("name") String name,
+            @JsonProperty("price") double price) {
         this.id = id;
         this.name = name;
         this.price = price;
+
     }
 
     public int getId() {

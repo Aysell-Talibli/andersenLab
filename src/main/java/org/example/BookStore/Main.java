@@ -18,7 +18,7 @@ public class Main {
         ConfigLoader config = new ConfigLoader("config.properties");
         BookStoreService bookStoreService = new BookStoreService();
         OrderService orderService = new OrderService(bookStoreService, config);
-        OrderFileManager orderFileManager=new OrderFileManager(config);
+        OrderFileManager orderFileManager=new OrderFileManager(config,true);
         orderService.displayBooks();
         while (true) {
             System.out.println(""" 
@@ -38,6 +38,7 @@ public class Main {
                     case "list" -> orderService.listOrders(bookStoreService, scanner);
                     case "exit" -> {
                         System.out.println("Exiting program.");
+                        orderFileManager.loadState();
                         orderFileManager.saveState(orderService.getOrders());
                         scanner.close();
                         return;
