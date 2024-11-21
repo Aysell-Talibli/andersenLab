@@ -89,36 +89,6 @@ public class OrderServiceTest {
     }
 
     @Test
-    void saveState() throws IOException {
-        String fileLocation = "orders.txt";
-        lenient().when(configLoader.getOrderFileLocation()).thenReturn(fileLocation);
-        Book book1=new Book(1,"the great",20);
-        List<Book> books= new ArrayList<>();
-        books.add(book1);
-        List<Order> orders = new ArrayList<>();
-        Order sampleOrder = new Order(1,books, 20);
-        orders.add(sampleOrder);
-        orderService.getOrders().addAll(orders);
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        FileWriter fileWriter = mock(FileWriter.class);
-        lenient().doNothing().when(fileWriter).write(anyString());
-        orderService.saveState();
-        verify(configLoader).getOrderFileLocation();
-    }
-
-    @Test
-    void loadState() throws IOException {
-        String fileLocation = "testOrders.json";
-        when(configLoader.getOrderFileLocation()).thenReturn(fileLocation);
-        String json = "[{\"id\":1,\"totalPrice\":65,\"status\":\"OPENED\"}]";
-        Files.writeString(Paths.get(fileLocation), json);
-        orderService.loadState();
-        assertEquals(1, orderService.getOrders().size());
-        assertEquals(1, orderService.getOrders().get(0).getId());
-    }
-
-    @Test
     void changeBookAvailabilityEnabled() throws BookNotFoundException {
         int bookId = 1;
         boolean isAvailable = true;

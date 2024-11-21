@@ -16,3 +16,47 @@
   "openingTime" : [ 2024, 11, 19, 0, 10, 3, 343117700 ],
   "closingTime" : null
 }
+{
+  "id" : 1,
+  "books" : [ {
+    "id" : 1,
+    "name" : "crime and punishemnt",
+    "price" : 20.0,
+    "available" : true
+  }, {
+    "id" : 2,
+    "name" : "The Great",
+    "price" : 15.0,
+    "available" : false
+  } ],
+  "totalPrice" : 35.0,
+  "status" : "OPENED",
+  "openingTime" : [ 2024, 11, 21, 14, 48, 29, 111354200 ],
+  "closingTime" : null
+}
+{
+  "id" : 1,
+  "books" : [ {
+    "id" : 1,
+    "name" : "the great",
+    "price" : 20.0,
+    "available" : false
+  } ],
+  "totalPrice" : 20.0,
+  "status" : "OPENED",
+  "openingTime" : [ 2024, 11, 21, 15, 2, 21, 184720200 ],
+  "closingTime" : null
+}
+{
+  "id" : 1,
+  "books" : [ {
+    "id" : 1,
+    "name" : "the great",
+    "price" : 20.0,
+    "available" : false
+  } ],
+  "totalPrice" : 20.0,
+  "status" : "OPENED",
+  "openingTime" : [ 2024, 11, 21, 20, 43, 18, 340117900 ],
+  "closingTime" : null
+}

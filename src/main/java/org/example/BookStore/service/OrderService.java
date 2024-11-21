@@ -16,9 +16,8 @@ import java.util.Scanner;
 
 public class OrderService {
     private final BookStoreService bookStoreService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private List<Order> orders = new ArrayList<>();
     private final ConfigLoader configLoader;
+    private List<Order> orders = new ArrayList<>();
 
     public List<Order> getOrders() {
         return orders;
@@ -26,7 +25,7 @@ public class OrderService {
 
     public OrderService(BookStoreService bookStoreService, ConfigLoader configLoader) {
         this.bookStoreService = bookStoreService;
-        this.configLoader = configLoader;
+        this.configLoader=configLoader;
     }
 
     public void displayBooks() throws BookNotFoundException {
@@ -132,36 +131,6 @@ public class OrderService {
                     ", Opening Time: " + order.getOpeningTime() +
                     ", Closing Time: " + (order.getClosingTime() != null ? order.getClosingTime() : "Not closed yet"));
         });
-    }
-
-    public void saveState() {
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        objectMapper.findAndRegisterModules();
-        String fileLocation = configLoader.getOrderFileLocation();
-        try (FileWriter fileWriter = new FileWriter(fileLocation, true)) {
-            for (Order order : orders) {
-                String jsonOrder = objectMapper.writeValueAsString(order);
-                fileWriter.write(jsonOrder + System.lineSeparator());
-            }
-        } catch (IOException e) {
-            System.out.println("Error happened while saving " + e.getMessage());
-        }
-    }
-
-    public void loadState() {
-        objectMapper.findAndRegisterModules();
-        String fileLocation = configLoader.getOrderFileLocation();
-        try {
-            File file = new File(fileLocation);
-            if (file.exists()) {
-                Order[] loadedOrders = objectMapper.readValue(file, Order[].class);
-                orders = new ArrayList<>(List.of(loadedOrders));
-                System.out.println("Orders loaded from " + fileLocation);
-            }
-        } catch (IOException e) {
-            System.out.println("Error while loading" + e.getMessage());
-
-        }
     }
 
     public void changeBookAvailability(int bookId, boolean isAvailable) throws BookNotFoundException {
